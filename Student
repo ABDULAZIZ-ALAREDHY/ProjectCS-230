@@ -1,0 +1,31 @@
+public class Student extends Person {
+
+    private final String course;
+    private final double grade;
+
+    public Student(String name, int id, String course, double grade) {
+        super(name, id);
+        this.course = course;
+        this.grade = grade;
+    }
+
+    public boolean isPass() {
+        return this.grade >= 50;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("--- بيانات الطالب ---");
+        System.out.println("الاسم: " + getName());
+        System.out.println("الرقم التعريفي: " + getId());
+        System.out.println("اسم المادة: " + this.course);
+        System.out.println("الدرجة اللي جابها: " + this.grade);
+
+        if (isPass()) {
+            System.out.println("الوضع: ناجح (عدى)");
+        } else {
+            System.out.println("الوضع: راسب (ما عدى)");
+        }
+        System.out.println("---------------------");
+    }
+}
