@@ -1,0 +1,23 @@
+public class FullTimeEmployee extends Employee {
+
+    private final double monthlySalary;
+
+    public FullTimeEmployee(String name, int id, double monthlySalary) {
+        super(name, id);
+        this.monthlySalary = monthlySalary;
+    }
+
+    @Override
+    public double calculateSalary() {
+        return this.monthlySalary;
+    }
+
+    @Override
+    public void displayDetails() {
+        System.out.println("--- تفاصيل موظف دوام كامل ---");
+        System.out.println("الاسم: " + getName());
+        System.out.println("الرقم التعريفي: " + getId());
+        System.out.println("الراتب الشهري: " + this.monthlySalary + " ريال");
+        System.out.println("---------------------------");
+    }
+}
