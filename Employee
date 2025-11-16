@@ -1,0 +1,10 @@
+public abstract class Employee extends Person {
+
+    // الدالة البانية
+    public Employee(String name, int id) {
+        super(name, id);
+    }
+
+    // دالة مجردة لحساب الراتب
+    public abstract double calculateSalary();
+}
