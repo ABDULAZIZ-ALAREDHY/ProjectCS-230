@@ -1,0 +1,266 @@
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Main {
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+        ArrayList<Person> records = new ArrayList<>();
+        int choice;
+
+        System.out.println("=======================================");
+        System.out.println("    برنامج إدارة الجامعة السعودية الإلكترونية (CS230)");
+        System.out.println("=======================================");
+
+        while (true) {
+            System.out.println("\nاختار واحد من الخيارات اللي تحت:");
+            System.out.println("1. إضافة طالب جديد");
+            System.out.println("2. إضافة موظف دوام كامل");
+            System.out.println("3. إضافة موظف دوام جزئي");
+            System.out.println("4. شوف كل السجلات");
+            System.out.println("5. خروج من البرنامج");
+            System.out.print("اختيارك: ");
+
+            try {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("\n❌ غلط: لازم تدخل رقم للخيار.");
+                scanner.nextLine(); // مسح الإدخال الخاطئ
+                continue;
+            }
+
+            switch (choice) {
+                case 1:
+                    addStudent(records);
+                    break;
+                case 2:
+                    addFullTimeEmployee(records);
+                    break;
+                case 3:
+                    addPartTimeEmployee(records);
+                    break;
+                case 4:
+                    displayAllRecords(records);
+                    break;
+                case 5:
+                    System.out.println("\n✅ يعطيك العافية، مع السلامة.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("\n❌ غلط: الرقم اللي دخلته مو موجود بالخيارات.");
+            }
+        }
+    }
+
+    public static void addStudent(ArrayList<Person> records) {
+        System.out.println("\n--- دخل بيانات طالب جديد ---");
+
+        String name = getValidNameInput("دخل اسم الطالب: ");
+        // 🔑 التعديل هنا: استخدام دالة الحصول على ID فريد
+        int id = getUniqueIdInput("دخل الرقم التعريفي (ID) الفريد: ", records);
+
+        System.out.print("دخل اسم المادة: ");
+        String course = scanner.nextLine();
+
+        double grade = getValidGradeInput("دخل الدرجة (بين 0-100): ");
+
+        Student newStudent = new Student(name, id, course, grade);
+        records.add(newStudent);
+        System.out.println("\n✅ سجلنا الطالب " + name + " بنجاح.");
+    }
+
+    public static void addFullTimeEmployee(ArrayList<Person> records) {
+        System.out.println("\n--- دخل بيانات موظف دوام كامل ---");
+
+        String name = getValidNameInput("دخل اسم الموظف: ");
+        // 🔑 التعديل هنا: استخدام دالة الحصول على ID فريد
+        int id = getUniqueIdInput("دخل الرقم التعريفي (ID) الفريد: ", records);
+
+        double monthlySalary = getValidDoubleInput("دخل الراتب الشهري (لازم يكون موجب): ");
+
+        if (monthlySalary != -1) {
+            FullTimeEmployee newFTE = new FullTimeEmployee(name, id, monthlySalary);
+            records.add(newFTE);
+            System.out.println("\n✅ سجلنا الموظف " + name + " بنجاح.");
+        }
+    }
+
+    public static void addPartTimeEmployee(ArrayList<Person> records) {
+        System.out.println("\n--- دخل بيانات موظف دوام جزئي ---");
+
+        String name = getValidNameInput("دخل اسم الموظف: ");
+        // 🔑 التعديل هنا: استخدام دالة الحصول على ID فريد
+        int id = getUniqueIdInput("دخل الرقم التعريفي (ID) الفريد: ", records);
+
+        double hourlyRate = getValidDoubleInput("دخل أجر الساعة (لازم يكون موجب): ");
+
+        int hoursWorked = getValidIntegerInput("دخل عدد ساعات الشغل (لازم يكون موجب): ");
+
+        if (hourlyRate != -1 && hoursWorked != -1) {
+            PartTimeEmployee newPTE = new PartTimeEmployee(name, id, hourlyRate, hoursWorked);
+            records.add(newPTE);
+            System.out.println("\n✅ سجلنا الموظف " + name + " بنجاح.");
+        }
+    }
+
+    public static void displayAllRecords(ArrayList<Person> records) {
+        if (records.isEmpty()) {
+            System.out.println("\n💡 ما فيه أي سجلات حالياً عشان نعرضها.");
+            return;
+        }
+
+        int fullTimeCount = 0;
+        int partTimeCount = 0;
+        int studentCount = 0;
+        int totalEmployees = 0;
+
+        System.out.println("\n=========== كل السجلات اللي عندنا (" + records.size() + ") ===========");
+
+        for (Person member : records) {
+            member.displayDetails();
+
+            if (member instanceof FullTimeEmployee) {
+                FullTimeEmployee emp = (FullTimeEmployee) member;
+                System.out.println("الراتب المحسوب: " + emp.calculateSalary() + " ريال");
+                fullTimeCount++;
+                totalEmployees++;
+                System.out.println("========================================");
+            } else if (member instanceof PartTimeEmployee) {
+                PartTimeEmployee emp = (PartTimeEmployee) member;
+                System.out.println("الراتب المحسوب: " + emp.calculateSalary() + " ريال");
+                partTimeCount++;
+                totalEmployees++;
+                System.out.println("========================================");
+            } else if (member instanceof Student) {
+                studentCount++;
+                System.out.println("========================================");
+            }
+        }
+
+        System.out.println("\n📊 ملخص الإحصائيات الحالية:");
+        System.out.println("  - العدد الإجمالي للسجلات: " + records.size());
+        System.out.println("  - عدد الطلاب المُسجَّلين: " + studentCount);
+        System.out.println("  - عدد موظفين الدوام الكامل: " + fullTimeCount);
+        System.out.println("  - عدد موظفين الدوام الجزئي: " + partTimeCount);
+        System.out.println("  - العدد الإجمالي للموظفين: " + totalEmployees);
+        System.out.println("========================================");
+
+        if (totalEmployees > 0 && studentCount > 0) {
+            System.out.println("\n✨ ملاحظة إحصائية: سجلنا موظفين وطلاب في نفس الوقت، شغلنا تمام.");
+        } else if (totalEmployees > 0) {
+            System.out.println("\n✨ ملاحظة إحصائية: السجلات الموجودة هي للموظفين فقط.");
+        } else if (studentCount > 0) {
+            System.out.println("\n✨ ملاحظة إحصائية: السجلات الموجودة هي للطلاب فقط.");
+        }
+    }
+
+    public static String getValidNameInput(String prompt) {
+        String name = "";
+        while (true) {
+            System.out.print(prompt);
+            name = scanner.nextLine();
+            if (name.matches("^[a-zA-Z\\u0600-\\u06FF\\s]+$") && !name.trim().isEmpty()) {
+                break;
+            } else {
+                System.out.println("⚠️ غلط: الاسم لازم يكون حروف ومسافات بس.");
+            }
+        }
+        return name;
+    }
+
+    public static double getValidGradeInput(String prompt) {
+        double grade = -1;
+        while (grade == -1) {
+            System.out.print(prompt);
+            try {
+                grade = scanner.nextDouble();
+                scanner.nextLine();
+                if (grade < 0 || grade > 100) {
+                    System.out.println("⚠️ غلط: الدرجة لازم تكون بين 0 و 100.");
+                    grade = -1;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("⚠️ غلط: لازم تدخل رقم.");
+                scanner.nextLine();
+            }
+        }
+        return grade;
+    }
+
+    // 🆕 دالة جديدة للتحقق من فرادة الـ ID في القائمة
+    public static boolean isIdUnique(int id, ArrayList<Person> records) {
+        for (Person member : records) {
+            // يفترض أن فئة Person تحتوي على دالة getId()
+            if (member.getId() == id) {
+                return false; // الرقم موجود
+            }
+        }
+        return true; // الرقم فريد
+    }
+
+    // 🆕 دالة جديدة للحصول على ID فريد من المستخدم
+    public static int getUniqueIdInput(String prompt, ArrayList<Person> records) {
+        int input = -1;
+        while (input == -1) {
+            System.out.print(prompt);
+            try {
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if (input < 0) {
+                    System.out.println("⚠️ غلط: القيمة لازم تكون موجبة.");
+                    input = -1;
+                } 
+                // 🛑 نقطة التحقق من الـ Unique 
+                else if (!isIdUnique(input, records)) {
+                    System.out.println("❌ الرقم التعريفي " + input + " مستخدم بالفعل. دخل رقم فريد.");
+                    input = -1; 
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("⚠️ غلط: لازم الرقم يكون صحيح (ما فيه فواصل).");
+                scanner.nextLine();
+            }
+        }
+        return input;
+    }
+
+    public static int getValidIntegerInput(String prompt) {
+        int input = -1;
+        while (input == -1) {
+            System.out.print(prompt);
+            try {
+                input = scanner.nextInt();
+                scanner.nextLine();
+                if (input < 0) {
+                    System.out.println("⚠️ غلط: القيمة لازم تكون موجبة.");
+                    input = -1;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("⚠️ غلط: لازم الرقم يكون صحيح (ما فيه فواصل).");
+                scanner.nextLine();
+            }
+        }
+        return input;
+    }
+
+    public static double getValidDoubleInput(String prompt) {
+        double input = -1;
+        while (input == -1) {
+            System.out.print(prompt);
+            try {
+                input = scanner.nextDouble();
+                scanner.nextLine();
+                if (input < 0) {
+                    System.out.println("⚠️ غلط: القيمة لازم تكون موجبة أو صفر.");
+                    input = -1;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("⚠️ غلط: القيمة لازم تكون رقم.");
+                scanner.nextLine();
+            }
+        }
+        return input;
+    }
