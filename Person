@@ -1,0 +1,28 @@
+public abstract class Person {
+
+    private final String name;
+    private final int id;
+
+    /**
+     * الدالة البانية (Constructor) لتجهيز الاسم والرقم التعريفي.
+     */
+
+    public Person(String name, int id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    // دوال الوصول (Getters)
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * دالة مجردة لعرض التفاصيل. يجب تنفيذها في كل الأصناف الفرعية.
+     */
+    public abstract void displayDetails();
+}
