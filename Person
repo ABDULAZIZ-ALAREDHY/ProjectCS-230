@@ -1,28 +1,43 @@
+/**
+ * Represents a fundamental person entity in the system.
+ * This is an abstract class that serves as the base for all people 
+ * (Employees and Students). It defines common properties and behaviors.
+ */
 public abstract class Person {
 
     private final String name;
     private final int id;
 
     /**
-     * الدالة البانية (Constructor) لتجهيز الاسم والرقم التعريفي.
+     * Constructor to initialize the name and ID.
+     * @param name The name of the person.
+     * @param id The unique identifier of the person.
      */
-
     public Person(String name, int id) {
         this.name = name;
         this.id = id;
     }
 
-    // دوال الوصول (Getters)
+    // Accessor methods (Getters)
+    /**
+     * Retrieves the name of the person.
+     * @return The person's name as a String.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieves the unique ID of the person.
+     * @return The person's ID as an integer.
+     */
     public int getId() {
         return id;
     }
 
     /**
-     * دالة مجردة لعرض التفاصيل. يجب تنفيذها في كل الأصناف الفرعية.
+     * Abstract method to display the specific details of the person.
+     * This method must be implemented by every concrete subclass (e.g., Student, Employee).
      */
     public abstract void displayDetails();
 }
