@@ -1,31 +1,54 @@
+/**
+ * Represents a Student in the system.
+ * This class inherits from the Person class and includes student-specific 
+ * attributes like course name and grade, along with pass/fail logic.
+ */
 public class Student extends Person {
 
     private final String course;
     private final double grade;
 
+    /**
+     * Constructor for the Student class.
+     * Initializes a new student with their name, ID, registered course, and final grade.
+     * @param name The name of the student.
+     * @param id The unique identifier of the student.
+     * @param course The name of the course the student is taking.
+     * @param grade The final grade received by the student (e.g., out of 100).
+     */
     public Student(String name, int id, String course, double grade) {
         super(name, id);
         this.course = course;
         this.grade = grade;
     }
 
+    /**
+     * Checks if the student has passed the course based on their grade.
+     * Assumes a passing grade is 50 or above.
+     * @return true if the grade is 50 or greater, false otherwise.
+     */
     public boolean isPass() {
         return this.grade >= 50;
     }
 
+    /**
+     * Displays all the relevant details for the student, including personal information,
+     * course, grade, and the final pass/fail status.
+     */
     @Override
     public void displayDetails() {
-        System.out.println("--- بيانات الطالب ---");
-        System.out.println("الاسم: " + getName());
-        System.out.println("الرقم التعريفي: " + getId());
-        System.out.println("اسم المادة: " + this.course);
-        System.out.println("الدرجة اللي جابها: " + this.grade);
+        // Outputting details in English.
+        System.out.println("--- STUDENT DATA ---");
+        System.out.println("Name: " + getName());
+        System.out.println("ID: " + getId());
+        System.out.println("Course Name: " + this.course);
+        System.out.println("Grade Achieved: " + this.grade);
 
         if (isPass()) {
-            System.out.println("الوضع: ناجح (عدى)");
+            System.out.println("Status: Passed (Succeeded)");
         } else {
-            System.out.println("الوضع: راسب (ما عدى)");
+            System.out.println("Status: Failed (Did not succeed)");
         }
-        System.out.println("---------------------");
+        System.out.println("--------------------");
     }
 }
