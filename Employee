@@ -1,10 +1,20 @@
+/**
+ * Represents an abstract employee entity that extends the basic Person class.
+ */
 public abstract class Employee extends Person {
 
-    // الدالة البانية
+    // The Constructor Function
+    /**
+     * Initializes a new Employee object with a name and ID.
+     */
     public Employee(String name, int id) {
         super(name, id);
     }
 
-    // دالة مجردة لحساب الراتب
+    // Abstract function to calculate salary
+    /**
+     * An abstract method that must be implemented by concrete subclasses 
+     * to determine the employee's total salary.
+     */
     public abstract double calculateSalary();
 }
