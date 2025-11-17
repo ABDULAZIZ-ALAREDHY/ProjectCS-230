@@ -1,27 +1,49 @@
+/**
+ * Represents a part-time employee who is compensated based on an hourly rate 
+ * and the number of hours worked. This class extends the abstract Employee contract.
+ */
 public class PartTimeEmployee extends Employee {
 
     private final double hourlyRate;
     private final int hoursWorked;
 
+    /**
+     * Constructor for the PartTimeEmployee.
+     * Initializes the employee's name, ID, hourly rate, and total hours worked.
+     * @param name The name of the employee.
+     * @param id The unique identifier of the employee.
+     * @param hourlyRate The monetary rate paid per hour.
+     * @param hoursWorked The total number of hours the employee has worked.
+     */
     public PartTimeEmployee(String name, int id, double hourlyRate, int hoursWorked) {
         super(name, id);
         this.hourlyRate = hourlyRate;
         this.hoursWorked = hoursWorked;
     }
 
+    /**
+     * Calculates the total salary for the part-time employee.
+     * The salary is determined by multiplying the hourly rate by the number of hours worked.
+     * @return The total calculated salary.
+     */
     @Override
     public double calculateSalary() {
         return this.hourlyRate * this.hoursWorked;
     }
 
+    /**
+     * Displays all the relevant details for the part-time employee, 
+     * including their name, ID, hourly rate, hours worked, and calculated salary.
+     */
     @Override
     public void displayDetails() {
-        System.out.println("--- تفاصيل موظف دوام جزئي ---");
-        System.out.println("الاسم: " + getName());
-        System.out.println("الرقم التعريفي: " + getId());
-        System.out.println("أجر الساعة: " + this.hourlyRate + " ريال");
-        System.out.println("عدد ساعات الشغل: " + this.hoursWorked);
-        System.out.println("الراتب اللي يستاهله: " + calculateSalary() + " ريال");
-        System.out.println("----------------------------");
+        // Outputting details in English.
+        System.out.println("--- PART-TIME EMPLOYEE DETAILS ---");
+        System.out.println("Name: " + getName());
+        System.out.println("ID: " + getId());
+        System.out.println("Hourly Rate: " + this.hourlyRate + " Riyal");
+        System.out.println("Hours Worked: " + this.hoursWorked);
+        System.out.println("Total Earned Salary: " + calculateSalary() + " Riyal");
+        System.out.println("--------------------------------");
     }
 }
