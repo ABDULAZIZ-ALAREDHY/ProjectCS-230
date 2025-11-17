@@ -1,23 +1,43 @@
+/**
+ * Represents a full-time employee who is compensated with a fixed monthly salary.
+ * This class extends the basic Employee contract.
+ */
 public class FullTimeEmployee extends Employee {
 
     private final double monthlySalary;
 
+    /**
+     * Constructor for the FullTimeEmployee.
+     * Initializes the employee's name, ID, and fixed monthly salary.
+     * @param name The name of the employee.
+     * @param id The unique identifier of the employee.
+     * @param monthlySalary The predetermined monthly salary.
+     */
     public FullTimeEmployee(String name, int id, double monthlySalary) {
         super(name, id);
         this.monthlySalary = monthlySalary;
     }
 
+    /**
+     * Calculates the salary for the full-time employee.
+     * @return The fixed monthly salary.
+     */
     @Override
     public double calculateSalary() {
         return this.monthlySalary;
     }
 
+    /**
+     * Displays the full details of the employee, including personal information and salary.
+     */
     @Override
     public void displayDetails() {
-        System.out.println("--- تفاصيل موظف دوام كامل ---");
-        System.out.println("الاسم: " + getName());
-        System.out.println("الرقم التعريفي: " + getId());
-        System.out.println("الراتب الشهري: " + this.monthlySalary + " ريال");
-        System.out.println("---------------------------");
+        // Outputting details in English and simplifying the display text.
+        System.out.println("--- FULL-TIME EMPLOYEE DETAILS ---");
+        System.out.println("Name: " + getName());
+        System.out.println("ID: " + getId());
+        // Note: Keeping the unit 'Riyal' as it's a specific context detail.
+        System.out.println("Monthly Salary: " + this.monthlySalary + " Riyal");
+        System.out.println("----------------------------------");
     }
 }
